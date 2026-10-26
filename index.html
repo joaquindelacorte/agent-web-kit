@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Web Kit — Famil-IA</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.hero {
+  max-width: 1100px; margin: 0 auto;
+  padding: 5rem 2rem 3rem;
+  display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center;
+}
+.hero-eyebrow { display: flex; align-items: center; gap: .6rem; margin-bottom: 1.2rem; }
+.hero h1 { margin-bottom: .8rem; }
+.hero p  { font-size: 1.05rem; margin-bottom: 1.8rem; }
+.hero-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+.hero-visual {
+  width: 220px; height: 220px;
+  background: radial-gradient(circle at 40% 40%, rgba(99,102,241,.15), transparent 70%),
+              var(--card);
+  border: 1px solid var(--border-mid);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; flex-shrink: 0;
+}
+.hero-visual .logo-inner {
+  font-family: var(--mono); font-size: 2.8rem; font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-mid), var(--green));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.ring {
+  position: absolute; border-radius: 50%;
+  border: 1px solid rgba(99,102,241,.18);
+  animation: ring-pulse 3s ease-in-out infinite;
+}
+.ring-1 { width: 240px; height: 240px; animation-delay: 0s; }
+.ring-2 { width: 270px; height: 270px; animation-delay: .8s; }
+.ring-3 { width: 300px; height: 300px; animation-delay: 1.6s; }
+@keyframes ring-pulse {
+  0%,100% { opacity: .3; }
+  50%      { opacity: .08; }
+}
+
+.template-grid { grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); }
+.template-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+  display: flex; flex-direction: column;
+}
+.template-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px var(--accent-glow);
+}
+.template-preview {
+  height: 160px;
+  background: #080a0e;
+  display: flex; align-items: center; justify-content: center;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono); font-size: .72rem; color: var(--muted);
+  position: relative; overflow: hidden;
+}
+.preview-landing {
+  background: linear-gradient(135deg, #0d0f17 0%, #111827 100%);
+}
+.preview-dashboard {
+  background: linear-gradient(135deg, #0a1020 0%, #0f1a28 100%);
+}
+.preview-card {
+  background: linear-gradient(135deg, #0d0d14 0%, #111118 100%);
+}
+.preview-mini { width: 100%; height: 100%; padding: 1rem; position: relative; }
+.template-body { padding: 1.25rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+.template-body h3 { margin-bottom: .4rem; }
+.template-body p  { font-size: .875rem; margin-bottom: 1rem; flex: 1; }
+.template-tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.template-link {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: .82rem; font-weight: 600; color: var(--accent-mid);
+  font-family: var(--mono);
+}
+.template-link:hover { color: var(--ink); }
+.template-link::after { content: '&#x2192;'; }
+
+/* Components section */
+.comp-row { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; padding: .75rem 0; border-bottom: 1px solid var(--border); }
+.comp-row:last-child { border-bottom: none; }
+.comp-label { width: 120px; font-size: .75rem; color: var(--muted); font-family: var(--mono); flex-shrink: 0; }
+.comp-demo { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+
+/* Stats */
+.stats-row { display: flex; gap: 2rem; flex-wrap: wrap; margin: 2rem 0; }
+.stat-item { }
+.stat-val { font-size: 1.8rem; font-weight: 800; font-family: var(--mono); color: var(--ink); }
+.stat-val span { color: var(--accent-mid); }
+.stat-label { font-size: .72rem; color: var(--muted); font-family: var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+
+@media (max-width: 700px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">agent-web-<span>kit</span></div>
+  <div class="nav-links">
+    <a href="#templates" class="active"><span>Templates</span></a>
+    <a href="#components"><span>Componentes</span></a>
+    <a href="#design"><span>Design System</span></a>
+    <a href="https://github.com/joaquindelacorte/agent-web-kit" target="_blank" rel="noopener">
+      <span>GitHub</span>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero fade-in">
+  <div>
+    <div class="hero-eyebrow">
+      <span class="dot pulse"></span>
+      <span class="tag">Famil-IA Ecosystem</span>
+    </div>
+    <h1>Crea el sitio de tu agente en minutos</h1>
+    <p>Templates, componentes y un design system listo para construir cualquier presencia web de agentes IA. HTML + CSS + Vanilla JS, sin build step.</p>
+    <div class="hero-actions">
+      <a href="#templates" class="btn btn-primary">&#x1F4E6; Ver templates</a>
+      <a href="https://github.com/joaquindelacorte/agent-web-kit" class="btn btn-ghost" target="_blank" rel="noopener">Ver en GitHub</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="ring ring-1"></div>
+    <div class="ring ring-2"></div>
+    <div class="ring ring-3"></div>
+    <div class="logo-inner">AWK</div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="section" style="padding-top:0">
+  <div class="stats-row">
+    <div class="stat-item">
+      <div class="stat-val">3<span>x</span></div>
+      <div class="stat-label">Templates</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">1<span>k</span></div>
+      <div class="stat-label">Tokens CSS</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">0<span>s</span></div>
+      <div class="stat-label">Build time</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">&#x221E;</div>
+      <div class="stat-label">Customizable</div>
+    </div>
+  </div>
+</div>
+
+<!-- TEMPLATES -->
+<section class="section" id="templates">
+  <div class="section-label">Templates</div>
+  <h2 class="section-title">Elegí el punto de partida</h2>
+  <p class="section-subtitle">Tres templates para los casos de uso principales. Cada uno incluye el design system base y los patrones de UI mas comunes para agentes.</p>
+
+  <div class="grid template-grid">
+
+    <!-- Landing -->
+    <div class="template-card">
+      <div class="template-preview preview-landing">
+        <div class="preview-mini">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+            <div style="width:6px;height:6px;border-radius:50%;background:#22d3a5;box-shadow:0 0 6px #22d3a5"></div>
+            <div style="font-size:.6rem;color:#6b7280">AGENTE · ONLINE</div>
+          </div>
+          <div style="font-size:.9rem;font-weight:800;color:#e8eaf0;margin-bottom:4px">Hola, soy tu agente</div>
+          <div style="font-size:.55rem;color:#6b7280;margin-bottom:10px">Descripcion breve del agente y sus capacidades principales.</div>
+          <div style="display:flex;gap:4px">
+            <div style="background:#6366f1;color:#fff;font-size:.5rem;padding:2px 6px;border-radius:4px">Accion</div>
+            <div style="border:1px solid rgba(255,255,255,.1);color:#9ca3af;font-size:.5rem;padding:2px 6px;border-radius:4px">Saber mas</div>
+          </div>
+        </div>
+      </div>
+      <div class="template-body">
+        <h3>Landing Page</h3>
+        <p>Pagina completa de presentacion del agente. Hero, capacidades, ejemplos de uso, preguntas frecuentes y CTA.</p>
+        <div class="template-tags">
+          <span class="tag">Landing</span>
+          <span class="tag green">Showcase</span>
+          <span class="tag blue">CTA</span>
+        </div>
+        <a href="templates/landing/" class="template-link">Abrir template</a>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="template-card">
+      <div class="template-preview preview-dashboard">
+        <div class="preview-mini">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div style="font-size:.6rem;font-family:monospace;color:#6b7280">DASHBOARD · AGENTE</div>
+            <div style="font-size:.5rem;background:rgba(34,211,165,.15);color:#22d3a5;padding:1px 5px;border-radius:99px;border:1px solid rgba(34,211,165,.3)">LIVE</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px">
+            <div style="background:rgba(255,255,255,.04);border-radius:4px;padding:4px 6px">
+              <div style="font-size:.5rem;color:#6b7280">TAREAS HOY</div>
+              <div style="font-size:.85rem;font-weight:700;color:#e8eaf0;font-family:monospace">47</div>
+            </div>
+            <div style="background:rgba(255,255,255,.04);border-radius:4px;padding:4px 6px">
+              <div style="font-size:.5rem;color:#6b7280">UPTIME</div>
+              <div style="font-size:.85rem;font-weight:700;color:#22d3a5;font-family:monospace">99.9%</div>
+            </div>
+          </div>
+          <div style="height:3px;background:rgba(255,255,255,.05);border-radius:99px;overflow:hidden">
+            <div style="width:72%;height:100%;background:linear-gradient(90deg,#6366f1,#818cf8);border-radius:99px"></div>
+          </div>
+        </div>
+      </div>
+      <div class="template-body">
+        <h3>Dashboard de Estado</h3>
+        <p>Panel operativo con metricas en tiempo real, estado del agente, historial de tareas y logs de actividad.</p>
+        <div class="template-tags">
+          <span class="tag">Dashboard</span>
+          <span class="tag amber">Metricas</span>
+          <span class="tag">Live</span>
+        </div>
+        <a href="templates/dashboard/" class="template-link">Abrir template</a>
+      </div>
+    </div>
+
+    <!-- Card embed -->
+    <div class="template-card">
+      <div class="template-preview preview-card">
+        <div class="preview-mini" style="display:flex;align-items:center;justify-content:center">
+          <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 14px;width:90%;max-width:200px">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+              <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#22d3a5);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#fff">AI</div>
+              <div>
+                <div style="font-size:.65rem;font-weight:700;color:#e8eaf0">Nombre Agente</div>
+                <div style="font-size:.5rem;color:#6b7280">@handle · v1.0</div>
+              </div>
+              <div style="margin-left:auto;width:6px;height:6px;border-radius:50%;background:#22d3a5"></div>
+            </div>
+            <div style="font-size:.52rem;color:#9ca3af;line-height:1.5">Descripcion corta del agente para embeds en otras paginas.</div>
+          </div>
+        </div>
+      </div>
+      <div class="template-body">
+        <h3>Card Embebible</h3>
+        <p>Componente compacto para mostrar el agente en cualquier sitio. Avatar, nombre, estado y descripcion breve.</p>
+        <div class="template-tags">
+          <span class="tag">Embed</span>
+          <span class="tag green">Compact</span>
+          <span class="tag muted">Widget</span>
+        </div>
+        <a href="templates/card/" class="template-link">Abrir template</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMPONENTS -->
+<section class="section" id="components">
+  <div class="section-label">Componentes</div>
+  <h2 class="section-title">Building blocks</h2>
+  <p class="section-subtitle">Todos los componentes incluidos en <code>styles.css</code>.</p>
+
+  <div class="card" style="margin-bottom:1.25rem">
+    <div class="comp-row">
+      <div class="comp-label">Status Badges</div>
+      <div class="comp-demo">
+        <span class="status-badge online"><span class="dot pulse"></span> Online</span>
+        <span class="status-badge busy"><span class="dot amber"></span> Processing</span>
+        <span class="status-badge offline"><span class="dot red"></span> Offline</span>
+      </div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-label">Tags</div>
+      <div class="comp-demo">
+        <span class="tag">Default</span>
+        <span class="tag green">Green</span>
+        <span class="tag amber">Amber</span>
+        <span class="tag blue">Blue</span>
+        <span class="tag muted">Muted</span>
+      </div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-label">Botones</div>
+      <div class="comp-demo">
+        <button class="btn btn-primary">Primary</button>
+        <button class="btn btn-ghost">Ghost</button>
+      </div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-label">Indicadores</div>
+      <div class="comp-demo">
+        <span class="dot pulse"></span>
+        <span class="dot amber"></span>
+        <span class="dot red"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="codeblock">
+<span class="cm">&lt;!-- Status badge --&gt;</span>
+<span class="ck">&lt;span</span> <span class="cv">class</span>=<span class="cs">"status-badge online"</span><span class="ck">&gt;</span>
+  <span class="ck">&lt;span</span> <span class="cv">class</span>=<span class="cs">"dot pulse"</span><span class="ck">&gt;&lt;/span&gt;</span> Online
+<span class="ck">&lt;/span&gt;</span>
+  </div>
+</section>
+
+<!-- DESIGN SYSTEM -->
+<section class="section" id="design">
+  <div class="section-label">Design System</div>
+  <h2 class="section-title">Tokens CSS</h2>
+  <p class="section-subtitle">Todo el sistema visual esta definido en variables CSS en <code>styles.css</code>.</p>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3 style="margin-bottom:1rem;font-size:.9rem;font-family:var(--mono)">Colores</h3>
+      <div style="display:flex;flex-direction:column;gap:.5rem">
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <div style="width:32px;height:32px;border-radius:6px;background:#0a0c10;border:1px solid rgba(255,255,255,.1)"></div>
+          <div><div style="font-size:.78rem;font-family:var(--mono);color:var(--soft)">--bg</div><div style="font-size:.68rem;color:var(--muted)">#0a0c10</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <div style="width:32px;height:32px;border-radius:6px;background:#6366f1"></div>
+          <div><div style="font-size:.78rem;font-family:var(--mono);color:var(--soft)">--accent</div><div style="font-size:.68rem;color:var(--muted)">#6366f1</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <div style="width:32px;height:32px;border-radius:6px;background:#22d3a5"></div>
+          <div><div style="font-size:.78rem;font-family:var(--mono);color:var(--soft)">--green</div><div style="font-size:.68rem;color:var(--muted)">#22d3a5</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <div style="width:32px;height:32px;border-radius:6px;background:#f59e0b"></div>
+          <div><div style="font-size:.78rem;font-family:var(--mono);color:var(--soft)">--amber</div><div style="font-size:.68rem;color:var(--muted)">#f59e0b</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:1rem;font-size:.9rem;font-family:var(--mono)">Tipografia</h3>
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div>
+          <div style="font-family:var(--mono);font-size:.65rem;color:var(--muted);margin-bottom:.25rem">--font — Inter</div>
+          <div style="font-size:1.1rem;font-weight:700">Heading de agente</div>
+          <div style="font-size:.875rem;color:var(--soft)">Texto descriptivo del agente y sus capacidades principales.</div>
+        </div>
+        <div>
+          <div style="font-family:var(--mono);font-size:.65rem;color:var(--muted);margin-bottom:.25rem">--mono — JetBrains Mono</div>
+          <div style="font-family:var(--mono);font-size:.85rem;color:var(--accent-mid)">agent.run("tarea")</div>
+          <div style="font-family:var(--mono);font-size:.72rem;color:var(--muted)">STATUS: ONLINE · v2.4.1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  agent-web-kit &mdash; Famil-IA &mdash;
+  <a href="https://github.com/joaquindelacorte/agent-web-kit" target="_blank" rel="noopener">github.com/joaquindelacorte/agent-web-kit</a>
+</footer>
+
+</body>
+</html>

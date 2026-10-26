@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Card — <!-- AGENT_NAME --></title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+body {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-start;
+  padding: 3rem 1rem; gap: 2rem;
+  background: var(--bg);
+}
+
+/* ── Variante DEFAULT ── */
+.agent-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  width: 320px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.agent-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 24px var(--accent-glow);
+}
+.card-header {
+  display: flex; align-items: center; gap: .75rem;
+  margin-bottom: .9rem;
+}
+.card-avatar {
+  width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--accent), var(--green));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-weight: 700; font-size: 1rem; color: #fff;
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+.card-identity { flex: 1; }
+.card-name { font-weight: 700; font-size: .95rem; }
+.card-handle { font-family: var(--mono); font-size: .68rem; color: var(--muted); }
+.card-desc { font-size: .82rem; color: var(--soft); line-height: 1.5; margin-bottom: .9rem; }
+.card-footer { display: flex; align-items: center; justify-content: space-between; }
+.card-meta { display: flex; gap: .5rem; align-items: center; }
+
+/* ── Variante COMPACT ── */
+.agent-card-compact {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: .75rem 1rem;
+  display: flex; align-items: center; gap: .75rem;
+  width: 320px;
+  transition: border-color .2s;
+}
+.agent-card-compact:hover { border-color: var(--accent); }
+.compact-avatar {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--accent), var(--green));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-weight: 700; font-size: .75rem; color: #fff;
+}
+.compact-body { flex: 1; }
+.compact-name { font-size: .82rem; font-weight: 700; }
+.compact-sub  { font-size: .68rem; color: var(--muted); font-family: var(--mono); }
+
+/* ── Variante WIDE ── */
+.agent-card-wide {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  width: 480px; max-width: 100%;
+  display: grid; grid-template-columns: auto 1fr;
+  gap: 1.25rem; align-items: start;
+}
+.wide-avatar {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--green));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-weight: 700; font-size: 1.2rem; color: #fff;
+  box-shadow: 0 0 24px var(--accent-glow);
+}
+.wide-body {}
+.wide-name { font-size: 1.1rem; font-weight: 700; margin-bottom: .2rem; }
+.wide-handle { font-family: var(--mono); font-size: .7rem; color: var(--muted); margin-bottom: .6rem; }
+.wide-desc { font-size: .85rem; color: var(--soft); margin-bottom: .9rem; }
+.wide-tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: .9rem; }
+.wide-actions { display: flex; gap: .5rem; }
+
+/* Labels de sección de ejemplo */
+.example-label {
+  font-family: var(--mono); font-size: .65rem; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--muted); margin-bottom: .5rem;
+}
+</style>
+</head>
+<body>
+
+<div style="text-align:center;max-width:520px;margin-bottom:1rem">
+  <h1 style="font-size:1.3rem;margin-bottom:.35rem">Agent Card Templates</h1>
+  <p style="font-size:.85rem">Copiar la variante que mas se adapte a tu caso. Incluir <code>styles.css</code> del kit.</p>
+</div>
+
+<!-- DEFAULT CARD -->
+<div>
+  <div class="example-label">Variante Default</div>
+  <div class="agent-card">
+    <div class="card-header">
+      <div class="card-avatar"><!-- AGENT_INITIAL --></div>
+      <div class="card-identity">
+        <div class="card-name"><!-- AGENT_NAME --></div>
+        <div class="card-handle">@<!-- AGENT_HANDLE --> &middot; v<!-- AGENT_VERSION --></div>
+      </div>
+      <span class="dot pulse" style="flex-shrink:0"></span>
+    </div>
+    <div class="card-desc"><!-- AGENT_SHORT_DESC --></div>
+    <div class="card-footer">
+      <div class="card-meta">
+        <span class="tag"><!-- AGENT_CAT --></span>
+      </div>
+      <span class="status-badge online" style="font-size:.65rem;padding:.15rem .55rem">
+        <span class="dot" style="width:5px;height:5px"></span> Online
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- COMPACT CARD -->
+<div>
+  <div class="example-label">Variante Compact</div>
+  <div class="agent-card-compact">
+    <div class="compact-avatar"><!-- AGENT_INITIAL --></div>
+    <div class="compact-body">
+      <div class="compact-name"><!-- AGENT_NAME --></div>
+      <div class="compact-sub"><!-- AGENT_HANDLE --> &middot; <!-- AGENT_CAT --></div>
+    </div>
+    <span class="dot pulse"></span>
+  </div>
+</div>
+
+<!-- WIDE CARD -->
+<div>
+  <div class="example-label">Variante Wide</div>
+  <div class="agent-card-wide">
+    <div class="wide-avatar"><!-- AGENT_INITIAL --></div>
+    <div class="wide-body">
+      <div class="wide-name"><!-- AGENT_NAME --></div>
+      <div class="wide-handle">@<!-- AGENT_HANDLE --> &mdash; v<!-- AGENT_VERSION --></div>
+      <div class="wide-desc"><!-- AGENT_DESC --></div>
+      <div class="wide-tags">
+        <span class="tag"><!-- TAG1 --></span>
+        <span class="tag green"><!-- TAG2 --></span>
+        <span class="tag blue"><!-- TAG3 --></span>
+      </div>
+      <div class="wide-actions">
+        <a href="<!-- CTA_URL -->" class="btn btn-primary" style="font-size:.8rem;padding:.45rem .9rem"><!-- CTA_LABEL --></a>
+        <a href="<!-- DOCS_URL -->" class="btn btn-ghost" style="font-size:.8rem;padding:.45rem .9rem">Docs</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EMBED SNIPPET -->
+<div style="width:100%;max-width:520px">
+  <div class="example-label">Snippet para embeber</div>
+  <div class="codeblock">
+<span class="cm">&lt;!-- 1. Incluir el design system --&gt;</span>
+<span class="ck">&lt;link</span> <span class="cv">rel</span>=<span class="cs">"stylesheet"</span>
+      <span class="cv">href</span>=<span class="cs">"https://tu-cdn/agent-web-kit/styles.css"</span><span class="ck">&gt;</span>
+
+<span class="cm">&lt;!-- 2. Pegar la variante elegida --&gt;</span>
+<span class="ck">&lt;div</span> <span class="cv">class</span>=<span class="cs">"agent-card-compact"</span><span class="ck">&gt;</span>
+  ...
+<span class="ck">&lt;/div&gt;</span>
+  </div>
+</div>
+
+</body>
+</html>

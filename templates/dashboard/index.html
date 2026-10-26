@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><!-- AGENT_NAME --> Dashboard</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+body { background: #080a0f; }
+
+.dash-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 1.25rem;
+  display: flex; flex-direction: column;
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
+}
+.sidebar-brand {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .5rem 0 1.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+}
+.sidebar-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--green));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: .85rem; font-weight: 700; color: #fff;
+  flex-shrink: 0;
+}
+.sidebar-name { font-size: .85rem; font-weight: 700; }
+.sidebar-handle { font-size: .68rem; color: var(--muted); font-family: var(--mono); }
+.sidebar-nav { display: flex; flex-direction: column; gap: .15rem; }
+.sidebar-nav a {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .55rem .75rem; border-radius: var(--radius-sm);
+  font-size: .82rem; font-weight: 500; color: var(--muted);
+  transition: all .15s;
+}
+.sidebar-nav a:hover { color: var(--ink); background: rgba(255,255,255,.05); }
+.sidebar-nav a.active { color: var(--ink); background: rgba(99,102,241,.12); }
+.sidebar-nav a.active .nav-icon { color: var(--accent-mid); }
+.nav-icon { font-size: .9rem; }
+.sidebar-section { font-family: var(--mono); font-size: .62rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); padding: 1rem .75rem .4rem; }
+.sidebar-footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border); }
+
+/* Main */
+.dash-main { overflow-y: auto; }
+.dash-topbar {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(8,10,15,.9); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: .9rem 2rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.dash-topbar h1 { font-size: 1rem; font-weight: 700; }
+.dash-topbar .ml-auto { margin-left: auto; display: flex; gap: .5rem; align-items: center; }
+.dash-content { padding: 2rem; max-width: 1000px; }
+
+/* KPI cards */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 1rem; margin-bottom: 2rem; }
+.kpi-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.25rem;
+}
+.kpi-label { font-family: var(--mono); font-size: .65rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: .5rem; }
+.kpi-value { font-size: 2rem; font-weight: 800; font-family: var(--mono); margin-bottom: .25rem; }
+.kpi-value.accent { color: var(--accent-mid); }
+.kpi-value.green  { color: var(--green); }
+.kpi-value.amber  { color: var(--amber); }
+.kpi-delta { font-size: .72rem; color: var(--muted); }
+.kpi-delta.up   { color: var(--green); }
+.kpi-delta.down { color: var(--red); }
+
+/* Activity list */
+.activity-list { display: flex; flex-direction: column; }
+.activity-item {
+  display: flex; align-items: flex-start; gap: .75rem;
+  padding: .9rem 0; border-bottom: 1px solid var(--border);
+}
+.activity-item:last-child { border-bottom: none; }
+.activity-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  margin-top: 4px; flex-shrink: 0;
+}
+.activity-dot.success { background: var(--green); }
+.activity-dot.warn    { background: var(--amber); }
+.activity-dot.info    { background: var(--accent-mid); }
+.activity-body { flex: 1; }
+.activity-title { font-size: .875rem; font-weight: 500; margin-bottom: .2rem; }
+.activity-meta  { font-size: .75rem; color: var(--muted); font-family: var(--mono); }
+
+/* Progress bar */
+.prog-row { display: flex; flex-direction: column; gap: .35rem; margin-bottom: 1rem; }
+.prog-label { display: flex; justify-content: space-between; align-items: center; font-size: .78rem; }
+.prog-label span:last-child { font-family: var(--mono); color: var(--muted); }
+.prog-track { height: 6px; background: rgba(255,255,255,.06); border-radius: 99px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--accent), var(--accent-mid)); }
+.prog-fill.green { background: linear-gradient(90deg, var(--green), #34d399); }
+.prog-fill.amber { background: linear-gradient(90deg, var(--amber), #fbbf24); }
+
+/* Live indicator */
+.live-badge {
+  display: inline-flex; align-items: center; gap: .35rem;
+  font-family: var(--mono); font-size: .65rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--green); background: var(--green-glow);
+  border: 1px solid rgba(34,211,165,.3);
+  padding: .2rem .6rem; border-radius: 99px;
+}
+
+@media (max-width: 700px) {
+  .dash-layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="dash-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-avatar"><!-- AGENT_INITIAL --></div>
+      <div>
+        <div class="sidebar-name"><!-- AGENT_NAME --></div>
+        <div class="sidebar-handle"><!-- AGENT_HANDLE --></div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Principal</div>
+      <a href="#overview" class="active">
+        <span class="nav-icon">&#x25A6;</span> Overview
+      </a>
+      <a href="#activity">
+        <span class="nav-icon">&#x23F3;</span> Actividad
+      </a>
+      <a href="#tasks">
+        <span class="nav-icon">&#x2713;</span> Tareas
+      </a>
+
+      <div class="sidebar-section">Sistema</div>
+      <a href="#metrics">
+        <span class="nav-icon">&#x25B3;</span> M&#x00E9;tricas
+      </a>
+      <a href="#config">
+        <span class="nav-icon">&#x2699;</span> Config
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="status-badge online">
+        <span class="dot pulse"></span> Agente online
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <h1>Dashboard</h1>
+      <span class="tag muted"><!-- AGENT_ENV --></span>
+      <div class="ml-auto">
+        <span class="live-badge"><span class="dot pulse" style="width:5px;height:5px"></span>LIVE</span>
+        <button class="btn btn-ghost" style="padding:.35rem .75rem;font-size:.78rem">&#x21BA; Refresh</button>
+      </div>
+    </div>
+
+    <div class="dash-content">
+
+      <!-- KPIs -->
+      <section id="overview">
+        <div style="margin-bottom:1.25rem">
+          <div class="section-label">Overview</div>
+          <h2 style="font-size:1.1rem">Estado del agente</h2>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Tareas hoy</div>
+            <div class="kpi-value accent" id="kpi-tasks">--</div>
+            <div class="kpi-delta up" id="kpi-tasks-delta">cargando...</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Uptime</div>
+            <div class="kpi-value green" id="kpi-uptime">--</div>
+            <div class="kpi-delta" id="kpi-uptime-d">&#x221E; dias</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Tasa de exito</div>
+            <div class="kpi-value green" id="kpi-success">--</div>
+            <div class="kpi-delta" id="kpi-success-d">ultimos 30d</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Errores</div>
+            <div class="kpi-value amber" id="kpi-errors">--</div>
+            <div class="kpi-delta up" id="kpi-errors-d">cargando...</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- METRICS -->
+      <section id="metrics" style="margin-bottom:2rem">
+        <div style="margin-bottom:1.25rem">
+          <div class="section-label">M&#x00E9;tricas</div>
+          <h2 style="font-size:1.1rem">Capacidad de uso</h2>
+        </div>
+        <div class="card">
+          <div class="prog-row">
+            <div class="prog-label"><span>CPU</span><span id="cpu-pct">--</span></div>
+            <div class="prog-track"><div class="prog-fill" id="cpu-bar" style="width:0%"></div></div>
+          </div>
+          <div class="prog-row">
+            <div class="prog-label"><span>Memoria</span><span id="mem-pct">--</span></div>
+            <div class="prog-track"><div class="prog-fill green" id="mem-bar" style="width:0%"></div></div>
+          </div>
+          <div class="prog-row">
+            <div class="prog-label"><span>Cola de tareas</span><span id="queue-pct">--</span></div>
+            <div class="prog-track"><div class="prog-fill amber" id="queue-bar" style="width:0%"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ACTIVITY -->
+      <section id="activity">
+        <div style="margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem">
+          <div>
+            <div class="section-label">Actividad</div>
+            <h2 style="font-size:1.1rem">&#xDA;ltimas acciones</h2>
+          </div>
+        </div>
+        <div class="card">
+          <div class="activity-list" id="activity-list">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /dash-content -->
+  </main>
+</div>
+
+<script>
+// ── Demo data — replace with real API calls ──
+var AGENT_DATA = {
+  tasks_today: 47,
+  tasks_delta: '+12 vs ayer',
+  uptime: '99.9%',
+  uptime_days: '14 dias',
+  success_rate: '98.2%',
+  errors: 3,
+  errors_delta: '-2 vs ayer',
+  cpu: 24,
+  mem: 41,
+  queue: 18,
+  activity: [
+    { type: 'success', title: 'Tarea completada: <!-- SAMPLE_TASK_1 -->', time: 'hace 2 min' },
+    { type: 'info',    title: 'Nueva tarea recibida: <!-- SAMPLE_TASK_2 -->', time: 'hace 5 min' },
+    { type: 'success', title: 'Report generado: <!-- SAMPLE_REPORT -->', time: 'hace 11 min' },
+    { type: 'warn',    title: 'Reintento: <!-- SAMPLE_RETRY -->', time: 'hace 18 min' },
+    { type: 'success', title: 'Sincronizacion completada', time: 'hace 22 min' },
+    { type: 'info',    title: 'Agente iniciado', time: 'hace 1 hora' }
+  ]
+};
+
+function init() {
+  document.getElementById('kpi-tasks').textContent = AGENT_DATA.tasks_today;
+  document.getElementById('kpi-tasks-delta').textContent = AGENT_DATA.tasks_delta;
+  document.getElementById('kpi-uptime').textContent = AGENT_DATA.uptime;
+  document.getElementById('kpi-uptime-d').textContent = AGENT_DATA.uptime_days;
+  document.getElementById('kpi-success').textContent = AGENT_DATA.success_rate;
+  document.getElementById('kpi-errors').textContent = AGENT_DATA.errors;
+  document.getElementById('kpi-errors-d').textContent = AGENT_DATA.errors_delta;
+
+  // progress bars (animate in)
+  setTimeout(function() {
+    document.getElementById('cpu-pct').textContent = AGENT_DATA.cpu + '%';
+    document.getElementById('mem-pct').textContent = AGENT_DATA.mem + '%';
+    document.getElementById('queue-pct').textContent = AGENT_DATA.queue + '%';
+    document.getElementById('cpu-bar').style.width   = AGENT_DATA.cpu + '%';
+    document.getElementById('mem-bar').style.width   = AGENT_DATA.mem + '%';
+    document.getElementById('queue-bar').style.width = AGENT_DATA.queue + '%';
+  }, 300);
+
+  // activity feed
+  var list = document.getElementById('activity-list');
+  list.innerHTML = AGENT_DATA.activity.map(function(a) {
+    return '<div class="activity-item">' +
+           '  <div class="activity-dot ' + a.type + '"></div>' +
+           '  <div class="activity-body">' +
+           '    <div class="activity-title">' + a.title + '</div>' +
+           '    <div class="activity-meta">' + a.time + '</div>' +
+           '  </div>' +
+           '</div>';
+  }).join('');
+}
+
+init();
+</script>
+</body>
+</html>

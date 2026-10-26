@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><!-- AGENT_NAME --> — Agente IA</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+/* ── Landing-specific styles ── */
+.hero-landing {
+  max-width: 900px; margin: 0 auto;
+  padding: 6rem 2rem 4rem;
+  text-align: center;
+}
+.agent-avatar {
+  width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 1.5rem;
+  background: linear-gradient(135deg, var(--accent), var(--green));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; font-weight: 800; color: #fff;
+  font-family: var(--mono);
+  box-shadow: 0 0 40px var(--accent-glow);
+}
+.hero-landing h1 { font-size: clamp(2rem,5vw,3.2rem); margin-bottom: .75rem; }
+.hero-landing .lead { font-size: 1.1rem; color: var(--soft); margin-bottom: 2rem; max-width: 560px; margin-left: auto; margin-right: auto; }
+.hero-landing .hero-meta { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
+
+/* Capabilities */
+.cap-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.5rem;
+  transition: border-color .2s, box-shadow .2s;
+}
+.cap-card:hover { border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
+.cap-icon { font-size: 1.5rem; margin-bottom: .75rem; }
+.cap-card h3 { margin-bottom: .4rem; }
+.cap-card p { font-size: .875rem; }
+
+/* Examples */
+.example-block {
+  background: #080a0e; border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+}
+.example-prompt {
+  font-family: var(--mono); font-size: .8rem;
+  color: var(--accent-mid); margin-bottom: .5rem;
+}
+.example-prompt::before { content: '> '; color: var(--muted); }
+.example-response { font-size: .875rem; color: var(--soft); }
+
+/* FAQ */
+.faq-item { border-bottom: 1px solid var(--border); padding: 1.25rem 0; cursor: pointer; }
+.faq-item:last-child { border-bottom: none; }
+.faq-q { display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+.faq-arrow { color: var(--muted); transition: transform .2s; font-family: var(--mono); }
+.faq-item.open .faq-arrow { transform: rotate(90deg); }
+.faq-a { display: none; color: var(--soft); font-size: .9rem; margin-top: .75rem; }
+.faq-item.open .faq-a { display: block; }
+
+/* CTA */
+.cta-band {
+  background: linear-gradient(135deg, rgba(99,102,241,.12), rgba(34,211,165,.06));
+  border: 1px solid rgba(99,102,241,.2);
+  border-radius: var(--radius); padding: 3rem 2rem;
+  text-align: center; margin: 0 2rem;
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand"><!-- AGENT_HANDLE --></div>
+  <div class="nav-links">
+    <a href="#capabilities"><span>Capacidades</span></a>
+    <a href="#examples"><span>Ejemplos</span></a>
+    <a href="#faq"><span>FAQ</span></a>
+    <a href="#cta" class="btn btn-primary" style="padding:.35rem .9rem;font-size:.8rem">Empezar</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-landing fade-in">
+  <div class="agent-avatar"><!-- AGENT_INITIAL --></div>
+  <div class="hero-meta">
+    <span class="status-badge online"><span class="dot pulse"></span> Online</span>
+    <span class="tag">v<!-- AGENT_VERSION --></span>
+    <span class="tag blue"><!-- AGENT_CATEGORY --></span>
+  </div>
+  <h1><!-- AGENT_NAME --></h1>
+  <p class="lead"><!-- AGENT_DESCRIPTION --></p>
+  <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+    <a href="#cta" class="btn btn-primary">&#x2728; Usar ahora</a>
+    <a href="#examples" class="btn btn-ghost">Ver ejemplos</a>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section class="section" id="capabilities">
+  <div class="section-label">Capacidades</div>
+  <h2 class="section-title">&#x00BF;Qu&#x00E9; puede hacer?</h2>
+  <p class="section-subtitle"><!-- CAPABILITIES_INTRO --></p>
+
+  <div class="grid g3">
+    <div class="cap-card">
+      <div class="cap-icon"><!-- CAP1_ICON --></div>
+      <h3><!-- CAP1_TITLE --></h3>
+      <p><!-- CAP1_DESC --></p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-icon"><!-- CAP2_ICON --></div>
+      <h3><!-- CAP2_TITLE --></h3>
+      <p><!-- CAP2_DESC --></p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-icon"><!-- CAP3_ICON --></div>
+      <h3><!-- CAP3_TITLE --></h3>
+      <p><!-- CAP3_DESC --></p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-icon"><!-- CAP4_ICON --></div>
+      <h3><!-- CAP4_TITLE --></h3>
+      <p><!-- CAP4_DESC --></p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-icon"><!-- CAP5_ICON --></div>
+      <h3><!-- CAP5_TITLE --></h3>
+      <p><!-- CAP5_DESC --></p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-icon"><!-- CAP6_ICON --></div>
+      <h3><!-- CAP6_TITLE --></h3>
+      <p><!-- CAP6_DESC --></p>
+    </div>
+  </div>
+</section>
+
+<!-- EXAMPLES -->
+<section class="section" id="examples">
+  <div class="section-label">Ejemplos</div>
+  <h2 class="section-title">En acci&#x00F3;n</h2>
+  <p class="section-subtitle">Ejemplos reales de c&#x00F3;mo interact&#x00FA;an los usuarios con el agente.</p>
+
+  <div class="example-block">
+    <div class="example-prompt"><!-- EXAMPLE1_PROMPT --></div>
+    <div class="example-response"><!-- EXAMPLE1_RESPONSE --></div>
+  </div>
+  <div class="example-block">
+    <div class="example-prompt"><!-- EXAMPLE2_PROMPT --></div>
+    <div class="example-response"><!-- EXAMPLE2_RESPONSE --></div>
+  </div>
+  <div class="example-block">
+    <div class="example-prompt"><!-- EXAMPLE3_PROMPT --></div>
+    <div class="example-response"><!-- EXAMPLE3_RESPONSE --></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="section-label">Preguntas frecuentes</div>
+  <h2 class="section-title">FAQ</h2>
+  <p class="section-subtitle"></p>
+
+  <div class="card">
+    <div class="faq-item open" onclick="toggleFaq(this)">
+      <div class="faq-q"><!-- FAQ1_Q --> <span class="faq-arrow">&#x203A;</span></div>
+      <div class="faq-a"><!-- FAQ1_A --></div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><!-- FAQ2_Q --> <span class="faq-arrow">&#x203A;</span></div>
+      <div class="faq-a"><!-- FAQ2_A --></div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><!-- FAQ3_Q --> <span class="faq-arrow">&#x203A;</span></div>
+      <div class="faq-a"><!-- FAQ3_A --></div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><!-- FAQ4_Q --> <span class="faq-arrow">&#x203A;</span></div>
+      <div class="faq-a"><!-- FAQ4_A --></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section" id="cta" style="padding-top:0;padding-left:0;padding-right:0;max-width:100%">
+  <div class="cta-band">
+    <h2 style="margin-bottom:.5rem">Listo para empezar?</h2>
+    <p style="margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto"><!-- CTA_DESC --></p>
+    <a href="<!-- CTA_URL -->" class="btn btn-primary" style="font-size:1rem;padding:.75rem 2rem"><!-- CTA_BTN --></a>
+  </div>
+</section>
+
+<footer class="footer">
+  <!-- AGENT_NAME --> &mdash; <!-- AGENT_HANDLE --> &mdash; Famil-IA
+</footer>
+
+<script>
+function toggleFaq(el) {
+  el.classList.toggle('open');
+}
+</script>
+</body>
+</html>
